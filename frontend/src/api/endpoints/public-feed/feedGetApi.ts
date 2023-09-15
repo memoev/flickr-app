@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FeedRequest, feedSchema } from "./feedTypes";
+import { FeedItem, FeedItems, FeedRequest, feedSchema } from "./feedTypes";
 import { getBaseFeedApiUrl } from "../../../utils/environment";
 import { makeApiRequest } from "../../useMakeRequest";
 import pathBuilder from "../../utils/pathBuilder";
@@ -8,13 +8,11 @@ import queryKeys from "../../utils/queryKeys";
 
 export const useGetFeedEndpoint = () => {
   const baseUrl = getBaseFeedApiUrl();
-  return useQuery(queryKeys.getPublicFeed(), () => {
-    const urlParams = prepareUrlParams();
+  return useQuery(["feeds"], () => {
     return makeApiRequest({
       baseUrl,
       urlPath: pathBuilder.buildPublicFeedPath(),
       responseDataSchema: feedSchema,
-      urlSearchParams: new URLSearchParams(urlParams),
     });
   });
 };
@@ -33,8 +31,8 @@ export const useGetFeedEndpointWithParams = () => {
       });
     },
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(queryKeys.getPublicFeed());
+      onSuccess: (data) => {
+        queryClient.setQueryData(["feeds"], data);
       },
     }
   );

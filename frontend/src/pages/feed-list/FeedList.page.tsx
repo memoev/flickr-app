@@ -1,13 +1,9 @@
-import { FeedItem } from "../../api/endpoints/public-feed/feedTypes";
+import { useGetFeedEndpoint } from "../../api/endpoints/public-feed/feedGetApi";
 import TableFeedList from "./TableFeedList";
 
-type TableListProps = {
-  feed?: FeedItem[];
-  isLoading: boolean;
-  isError: boolean;
-};
+const FeedList = () => {
+  const { data: feed, isLoading, isError } = useGetFeedEndpoint();
 
-const FeedList = ({ feed, isLoading, isError }: TableListProps) => {
   return (
     <div>
       {isLoading ? (

@@ -9,17 +9,9 @@ import {
 
 const SearchBox = () => {
   // State to store the input value
-  const { data, isLoading, isError } = useGetFeedEndpoint();
   const { mutate: queryWithParams, isLoading: isLoadingWithParams } =
     useGetFeedEndpointWithParams();
-  const [feedItems, setFeedItems] = useState<FeedItems>();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (data) {
-      setFeedItems(data);
-    }
-  }, [data]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = inputRef.current;
@@ -53,9 +45,6 @@ const SearchBox = () => {
         <Button variant="contained" onClick={handleButtonClick}>
           Search!
         </Button>
-      </Box>
-      <Box>
-        <FeedList feed={feedItems} isLoading={isLoading} isError={isError} />
       </Box>
     </>
   );

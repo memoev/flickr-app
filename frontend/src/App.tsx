@@ -10,6 +10,7 @@ export const App = () => {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <SearchBox />
+        <FeedList />
       </div>
     </QueryClientProvider>
   );
