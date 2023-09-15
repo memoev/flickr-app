@@ -6,7 +6,9 @@
     "noImplicitAny": true,
     "removeComments": true,
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": ["node", "express", "jest"],
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts"]
