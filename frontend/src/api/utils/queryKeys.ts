@@ -3,7 +3,7 @@ enum Key {
 }
 
 const queryKeys = {
-  publicFeed: () => [Key.PublicFeed] as const,
+  getPublicFeed: () => [Key.PublicFeed] as const,
 };
 
-export { queryKeys };
+export default queryKeys;

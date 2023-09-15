@@ -1,27 +1,20 @@
-import { useQuery, useQueryClient } from "react-query";
-import { makeApiRequest } from "../../useMakeRequest";
-import { queryKeys } from "../../utils/queryKeys";
+import { useQuery } from "@tanstack/react-query";
+import { feedSchema } from "./feedTypes";
 import { getBaseFeedApiUrl } from "../../../utils/environment";
+import { makeApiRequest } from "../../useMakeRequest";
 import pathBuilder from "../../utils/pathBuilder";
-import { feedItemSchema } from "./feedTypes";
+import prepareUrlParams from "../../utils/prepareUrlParams";
+import queryKeys from "../../utils/queryKeys";
 
-export const useGetFeed = () => {
-  const queryClient = useQueryClient();
+export const useGetFeedEndpoint = () => {
   const baseUrl = getBaseFeedApiUrl();
-
-  return useQuery(
-    queryKeys.publicFeed(),
-    () => {
-      return makeApiRequest({
-        baseUrl,
-        urlPath: pathBuilder.buildPublicFeedPath(),
-        responseDataSchema: feedItemSchema,
-      });
-    },
-    {
-      initialData: () => {
-        return queryClient.getQueryData(queryKeys.publicFeed());
-      },
-    }
-  );
+  return useQuery(queryKeys.getPublicFeed(), () => {
+    const urlParams = prepareUrlParams();
+    return makeApiRequest({
+      baseUrl,
+      urlPath: pathBuilder.buildPublicFeedPath(),
+      responseDataSchema: feedSchema,
+      urlSearchParams: new URLSearchParams(urlParams),
+    });
+  });
 };

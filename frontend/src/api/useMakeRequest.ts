@@ -54,7 +54,6 @@ export async function makeApiRequest<
   // Helpful discussion here: https://stackoverflow.com/a/66553240
   if (responseDataSchema) {
     const res = (await response.json()) as z.infer<typeof responseDataSchema>;
-    console.log(res);
 
     if (response.status === 400 && isErrorResponse(res)) {
       throw new ProjectError({
