@@ -7,7 +7,6 @@ type TableProps = {
 };
 
 const TableFeedList = ({ feeds }: TableProps) => {
-  //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<FeedItem>[]>(
     () => [
       {
