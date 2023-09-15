@@ -6,6 +6,8 @@ type TableProps = {
   feeds: FeedItem[];
 };
 
+const COLUMN_WIDTH = 200;
+
 const ImageCell = ({ title, link }: Omit<FeedItem, "tags">) => (
   <img alt={title} height={100} src={link} />
 );
@@ -24,13 +26,13 @@ const TableFeedList = ({ feeds }: TableProps) => {
       {
         accessorKey: "title",
         header: "Title",
-        size: 250,
+        size: COLUMN_WIDTH * 1.25,
       },
       {
         accessorKey: "link",
         id: "link",
         header: "Image",
-        size: 200,
+        size: COLUMN_WIDTH * 1.25,
         enableGlobalFilter: false,
         Cell: ({ row }) => (
           <ImageCell title={row.original.title} link={row.original.link} />
@@ -38,8 +40,9 @@ const TableFeedList = ({ feeds }: TableProps) => {
       },
       {
         accessorFn: (row) => row.tags.join(""),
+        id: "tags",
         header: "Tags",
-        size: 150,
+        size: COLUMN_WIDTH,
         enableGlobalFilter: false,
         Cell: ({ row }) => <TagsCell tags={row.original.tags} />,
       },
