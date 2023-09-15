@@ -22,7 +22,7 @@ const TableFeedList = ({ feeds }: TableProps) => {
         enableGlobalFilter: false,
         Cell: ({ row }) => (
           <img
-            alt="image"
+            alt={row.original.title}
             height={100}
             loading="lazy"
             src={row.original.link}

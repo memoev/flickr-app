@@ -1,5 +1,5 @@
 enum Key {
-  PublicFeed = "public-feed",
+  PublicFeed = "feed",
 }
 
 const queryKeys = {
