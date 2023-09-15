@@ -7,9 +7,10 @@ import { modelTransformation } from "../utils/helper";
 export const getFeed = async (req: Request, res: Response) => {
   try {
     const FLICKR_API_URL = process.env.FLICKR_API_URL;
+    const { tags } = req.query;
 
     // Fetch data from the Flickr public feed
-    const response = await axios.get(FLICKR_API_URL);
+    const response = await axios.get(`${FLICKR_API_URL}?tags=${tags}`);
     const { data } = response;
     const parsedData: Array<FlickrEntry> = [];
 
