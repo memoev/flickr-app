@@ -1,32 +1,23 @@
 import { Box, Button, TextField } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import FeedList from "../pages/feed-list/FeedList.page";
-import { FeedItems } from "../api/endpoints/public-feed/feedTypes";
-import {
-  useGetFeedEndpoint,
-  useGetFeedEndpointWithParams,
-} from "../api/endpoints/public-feed/feedGetApi";
+import React, { useRef } from "react";
+import { useGetFeedEndpointWithParams } from "../api/endpoints/public-feed/feedGetApi";
 
-const SearchBox = () => {
+const SearchBox: React.FC = () => {
   // State to store the input value
+  const [inputValue, setInputValue] = React.useState<string>("");
   const { mutate: queryWithParams, isLoading: isLoadingWithParams } =
     useGetFeedEndpointWithParams();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputElement = inputRef.current;
-    if (inputElement) {
-      inputElement.value = e.target.value;
-    }
+    setInputValue(e.target.value);
   };
 
   // Function to handle the button click
   const handleButtonClick = () => {
-    const inputElement = inputRef.current;
-    if (inputElement) {
-      const tag = inputElement.value;
-      queryWithParams({ tags: tag });
-    }
+    const tag = inputValue;
+    queryWithParams({ tags: tag });
+    setInputValue("");
   };
 
   return (
@@ -35,11 +26,12 @@ const SearchBox = () => {
         <h2>SEARCH IMAGES ON FLICKR</h2>
         <TextField
           id="outlined-basic"
-          label="Outlined"
+          label="Tags"
           variant="outlined"
           placeholder="Enter tag..."
           size="small"
-          ref={inputRef}
+          value={inputValue}
+          // ref={inputRef}
           onChange={handleInputChange}
         />
         <Button variant="contained" onClick={handleButtonClick}>
