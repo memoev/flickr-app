@@ -6,6 +6,18 @@ type TableProps = {
   feeds: FeedItem[];
 };
 
+const ImageCell = ({ title, link }: Omit<FeedItem, "tags">) => (
+  <img alt={title} height={100} src={link} />
+);
+
+const TagsCell = ({ tags }: Pick<FeedItem, "tags">) => (
+  <div>
+    {tags.map((tag) => (
+      <div key={tag}>{tag}</div>
+    ))}
+  </div>
+);
+
 const TableFeedList = ({ feeds }: TableProps) => {
   const columns = useMemo<MRT_ColumnDef<FeedItem>[]>(
     () => [
@@ -21,27 +33,15 @@ const TableFeedList = ({ feeds }: TableProps) => {
         size: 200,
         enableGlobalFilter: false,
         Cell: ({ row }) => (
-          <img
-            alt={row.original.title}
-            height={100}
-            loading="lazy"
-            src={row.original.link}
-          />
+          <ImageCell title={row.original.title} link={row.original.link} />
         ),
       },
       {
         accessorFn: (row) => row.tags.join(""),
-        // accessorKey: "tags",
         header: "Tags",
         size: 150,
         enableGlobalFilter: false,
-        Cell: ({ row }) => (
-          <div>
-            {row.original.tags.map((tag) => (
-              <div key={tag}>{tag}</div>
-            ))}
-          </div>
-        ),
+        Cell: ({ row }) => <TagsCell tags={row.original.tags} />,
       },
     ],
     []
