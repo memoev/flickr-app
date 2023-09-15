@@ -2,11 +2,16 @@ import { Box, Button, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import FeedList from "../pages/feed-list/FeedList.page";
 import { FeedItems } from "../api/endpoints/public-feed/feedTypes";
-import { useGetFeedEndpoint } from "../api/endpoints/public-feed/feedGetApi";
+import {
+  useGetFeedEndpoint,
+  useGetFeedEndpointWithParams,
+} from "../api/endpoints/public-feed/feedGetApi";
 
 const SearchBox = () => {
   // State to store the input value
   const { data, isLoading, isError } = useGetFeedEndpoint();
+  const { mutate: queryWithParams, isLoading: isLoadingWithParams } =
+    useGetFeedEndpointWithParams();
   const [feedItems, setFeedItems] = useState<FeedItems>();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -24,7 +29,13 @@ const SearchBox = () => {
   };
 
   // Function to handle the button click
-  const handleButtonClick = () => {};
+  const handleButtonClick = () => {
+    const inputElement = inputRef.current;
+    if (inputElement) {
+      const tag = inputElement.value;
+      queryWithParams({ tags: tag });
+    }
+  };
 
   return (
     <>
