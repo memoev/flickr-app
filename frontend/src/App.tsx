@@ -5,7 +5,9 @@ import SearchBox from "./components/SearchBox";
 export const App = () => {
   return (
     <div className="App">
-      <SearchBox />
+      <div className="Search">
+        <SearchBox />
+      </div>
       <FeedList />
     </div>
   );
