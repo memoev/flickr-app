@@ -5,7 +5,7 @@ node_modules/
 *.log
 
 # Ignore the .env file (contains environment variables, secrets, etc.)
-.env
+# .env
 
 # Ignore compiled code and build artifacts
 /dist/
